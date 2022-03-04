@@ -106,6 +106,22 @@ app.post("/new", (request, response) => {
   response.redirect("/success")
 })
 
+app.get("/wizard", (request, response) => {
+  response.render("wizard_1", { title: "A Modal Webpage (step 1)" })
+})
+
+app.post("/wizard", (request, response) => {
+  response.redirect("/wizard/2")
+})
+
+app.get("/wizard/2", (request, response) => {
+  response.render("wizard_2", { title: "A Modal Webpage (step 2)" })
+})
+
+app.post("/wizard/2", (request, response) => {
+  response.redirect("/")
+})
+
 app.get("/success", (request, response) => {
   response.render("success", { title: "It Worked!" })
 })
