@@ -19,7 +19,7 @@ app.use(layouts)
 // Turbo version
 app.use((request, response, next) => {
   response.locals.useTurbolinks = request.cookies.turbolinks || request.query.turbolinks
-  
+
   if (response.locals.useTurbolinks) {
     // Set cookie for this session
     response.cookie("turbolinks", "1")
@@ -66,91 +66,95 @@ app.get("/", (request, response) => {
   response.render("index", { title: "Turbo Native Demo", page_class: "index" })
 })
 
-app.get("/one", (request, response) => {
+app.get("/demo-one", (request, response) => {
   response.render("one", { title: "How’d You Get Here?" })
 })
 
-app.get("/two", (request, response) => {
+app.get("/demo-two", (request, response) => {
   response.render("two", { title: "Push or Replace?", action: request.query.action })
 })
 
-app.get("/long", (request, response) => {
+app.get("/demo-long", (request, response) => {
   response.render("long", { title: "A Really Long Page" })
 })
 
-app.get("/scroll", (request, response) => {
+app.get("/demo-scroll", (request, response) => {
   response.render("scroll", { title: "Restoring Your Scroll" })
 })
 
-app.get("/follow", (request, response) => {
+app.get("/demo-follow", (request, response) => {
   response.redirect("/redirected")
 })
 
-app.get("/redirected", (request, response) => {
+app.get("/demo-redirected", (request, response) => {
   response.render("redirected", { title: "Redirected Page" })
 })
 
-app.get("/reference", (request, response) => {
+app.get("/demo-reference", (request, response) => {
   response.render("reference", { title: "Reference", page_class: "index" })
 })
 
-app.get("/files", (request, response) => {
+app.get("/demo-files", (request, response) => {
   response.render("files", { title: "Handling Files" })
 })
 
-app.get("/new", (request, response) => {
+app.get("/demo-new", (request, response) => {
   response.render("new", { title: "A Modal Webpage" })
 })
 
-app.post("/new", (request, response) => {
-  response.redirect("/success")
+app.post("/demo-new", (request, response) => {
+  response.redirect("/demo-success")
 })
 
-app.get("/wizard", (request, response) => {
+app.get("/demo-tasks", (request, response) => {
+  response.render("tasks", { title: "Tasks" })
+})
+
+app.get("/demo-tasks/wizard/step-1", (request, response) => {
   response.render("wizard_1", { title: "A Modal Webpage (step 1)" })
 })
 
-app.post("/wizard", (request, response) => {
-  response.redirect("/wizard/2")
+app.post("/demo-tasks/wizard/step-1", (request, response) => {
+  response.redirect("/demo-tasks/wizard/step-2")
 })
 
-app.get("/wizard/2", (request, response) => {
+app.get("/demo-tasks/wizard/step-2", (request, response) => {
   response.render("wizard_2", { title: "A Modal Webpage (step 2)" })
 })
 
-app.post("/wizard/2", (request, response) => {
-  response.redirect("/")
+app.post("/demo-tasks/wizard/step-2", (request, response) => {
+  response.redirect("/demo-tasks?after_wizard_state=1")
 })
 
-app.get("/success", (request, response) => {
+app.get("/demo-success", (request, response) => {
   response.render("success", { title: "It Worked!" })
 })
 
-app.get("/numbers", (request, response) => {
+app.get("/demo-numbers", (request, response) => {
   response.render("numbers", { title: "A List of Numbers" })
 })
 
-app.get("/nonexistent", (request, response) => {
+app.get("/demo-nonexistent", (request, response) => {
   response.status(404).send("Not Found")
 })
 
-app.get("/reference/turbo-drive", (request, response) => {
+app.get("/demo-reference/turbo-drive", (request, response) => {
   response.render("turbo-drive", { title: "Turbo Drive" })
 })
 
-app.get("/reference/turbo-frames", (request, response) => {
+app.get("/demo-reference/turbo-frames", (request, response) => {
   response.render("turbo-frames", { title: "Turbo Frames" })
 })
 
-app.get("/reference/turbo-streams", (request, response) => {
+app.get("/demo-reference/turbo-streams", (request, response) => {
   response.render("turbo-streams", { title: "Turbo Streams" })
 })
 
-app.get("/reference/turbo-native", (request, response) => {
+app.get("/demo-reference/turbo-native", (request, response) => {
   response.render("turbo-native", { title: "Turbo Native" })
 })
 
-app.get("/protected", (request, response) => {
+app.get("/demo-protected", (request, response) => {
   if (response.locals.authenticated) {
     response.render("protected", { title: "Protected Webpage" })
   } else {
@@ -158,11 +162,11 @@ app.get("/protected", (request, response) => {
   }
 })
 
-app.get("/signin", (request, response) => {
+app.get("/demo-signin", (request, response) => {
   response.render("signin", { title: "Sign In" })
 })
 
-app.post("/signin", upload.none(), (request, response) => {
+app.post("/demo-signin", upload.none(), (request, response) => {
   // Cookie expires in one day
   const expiration = new Date(Date.now() + 86400000)
 
@@ -170,18 +174,18 @@ app.post("/signin", upload.none(), (request, response) => {
   response.redirect("/")
 })
 
-app.post("/signout", (request, response) => {
+app.post("/demo-signout", (request, response) => {
   response.clearCookie("authenticated")
   response.redirect("/")
 })
 
-app.get("/slow", (request, response) => {
+app.get("/demo-slow", (request, response) => {
   setTimeout(() => {
       response.render("slow", { title: "Slow-loading Page" })
   }, 3000)
 })
 
-app.get("/test", (request, response) => {
+app.get("/demo-test", (request, response) => {
   response.sendStatus(200)
 })
 
